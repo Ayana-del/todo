@@ -1,0 +1,109 @@
+/* public/css/login.css */
+
+/* フォーム全体を囲むコンテナ */
+.container {
+    padding-top: 50px;
+    /* ヘッダーからのスペース */
+}
+
+/* フォームのカード（枠線） */
+.card {
+    width: 400px;
+    /* フォームの最大幅 */
+    margin: 0 auto;
+    /* 中央寄せ */
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.05);
+    background-color: #fff;
+}
+
+/* カードヘッダー（タイトル部分） */
+.card-header {
+    background-color: #f7f7f7;
+    padding: 15px;
+    text-align: center;
+    border-bottom: 1px solid #ddd;
+}
+
+.card-header h2 {
+    margin: 0;
+    font-size: 20px;
+    color: #333;
+}
+
+/* カードボディ（フォーム本体） */
+.card-body {
+    padding: 20px;
+}
+
+/* フォームグループ（ラベルと入力欄のセット） */
+.form-group {
+    margin-bottom: 15px;
+    display: flex;
+    align-items: center;
+}
+
+/* ラベルのスタイル */
+.col-form-label {
+    width: 120px;
+    text-align: center;
+    padding-right: 15px;
+    font-size: 13px;
+    color: #555;
+}
+
+/* 入力フィールドのコンテナ */
+.col-md-6 {
+    flex-grow: 1;
+    /* 残りのスペースを占有 */
+}
+
+/* テキスト入力フィールド */
+.form-control {
+    width: 100%;
+    padding: 8px 12px;
+    border: 1px solid #ccc;
+    border-radius: 3px;
+    box-sizing: border-box;
+}
+
+/* エラーメッセージ */
+.invalid-feedback {
+    display: block;
+    /* エラー時に表示 */
+    color: #ff0000;
+    font-size: 12px;
+    margin-top: 5px;
+}
+
+/* フォームボタンの行 */
+.form-group.row.mb-0 {
+    margin-top: 20px;
+    text-align: center;
+}
+
+/* ログインボタン */
+.btn-primary {
+    padding: 10px 20px;
+    border: none;
+    border-radius: 3px;
+    background-color: #000;
+    /* Todoアプリのボタンカラー */
+    color: #fff;
+    cursor: pointer;
+    font-size: 16px;
+    transition: background-color 0.3s;
+}
+
+.btn-primary:hover {
+    background-color: #333;
+}
+
+/* リンク（会員登録の方はこちら） */
+.text-center.mt-3 {
+    color: #000;
+    text-decoration: none;
+    font-size: 14px;
+    text-align: center;
+}

@@ -1,0 +1,307 @@
+.todo__alert--success {
+    padding: 10px 30px;
+    border-color: #badbcc;
+    background-color: #d1e7dd;
+    color: #0f5132;
+}
+
+.todo__alert--danger {
+    padding: 10px 0;
+    border-color: #f5c2c7;
+    background-color: #f8d7da;
+    color: #842029;
+}
+
+.todo__alert--danger ul {
+    margin: 0;
+}
+
+.todo__content {
+    margin: 0 auto;
+    padding: 30px 15px;
+    max-width: 1230px;
+}
+
+.section__title {
+    margin: 0 auto;
+    width: 70%;
+}
+
+.logout-button{
+    color: #000
+}
+
+.create-form,.search-form {
+    display: flex;
+    justify-content: space-between;
+    margin: 0 auto;
+    margin-bottom: 15px;
+    width: 70%;
+    text-align: center;
+}
+
+.create-form__item,.search-form__item {
+    display: flex;
+    width: 80%;
+}
+
+.create-form__item-input:first-of-type,.search-form__item-input:first-of-type{
+    margin-right: 10px;
+    padding: 10px;
+    width: calc(40% - 10px);
+    height: 40px;
+    border: 1px solid #ddd;
+    border-radius: 3px;
+    box-sizing: border-box;
+}
+
+.create-form__item-select,.search-form__item-select {
+    margin-right: 10px;
+    padding: 10px;
+    width: calc(25% - 10px);
+    height: 40px;
+    border: 1px solid #ddd;
+    border-radius: 3px;
+    appearance: none;
+    box-sizing: border-box;
+}
+
+.create-form__item-input[type="date"],
+.search-form__item-input[type="date"] {
+    margin-right: 0;
+    /* 最後の要素は余白なし */
+    width: 35%;
+    /* 3要素になったため幅を調整 */
+    box-sizing: border-box;
+    /* paddingを含めて幅を計算 */
+}
+
+.create-form__button,.search-form__button {
+    width: 20%;
+}
+
+.create-form__button-submit,.search-form__button-submit {
+    padding: 10px;
+    width: 100%;
+    height: 40px;
+    border: none;
+    border-radius: 3px;
+    background: #000;
+    color: #fff;
+    cursor: pointer;
+}
+
+.todo-table {
+    margin: 30px auto;
+    width: 70%;
+}
+
+.todo-table__inner {
+    width: 100%;
+    border-collapse: collapse;
+        table-layout: fixed;
+}
+
+.todo-table__row {
+    border-bottom: 1px solid #ddd;
+}
+
+.todo-table__header {
+    padding: 12px;
+    text-align: left;
+    font-weight: bold;
+    width: auto;
+}
+
+.todo-table__inner th:nth-child(1),
+.todo-table__inner td:nth-child(1) {
+    width: 30%;
+}
+
+/* Todo内容 */
+.todo-table__inner th:nth-child(2),
+.todo-table__inner td:nth-child(2) {
+    width: 25%;
+}
+
+/* カテゴリ */
+.todo-table__inner th:nth-child(3),
+.todo-table__inner td:nth-child(3) {
+    width: 25%;
+}
+
+/* 期日 */
+.todo-table__inner th:nth-child(4),
+.todo-table__inner td:nth-child(4) {
+    width: 10%;
+}
+
+/* 更新ボタン */
+.todo-table__inner th:nth-child(5),
+.todo-table__inner td:nth-child(5) {
+    width: 10%;
+}
+
+/* 削除ボタン */
+
+.todo-table__item{
+    padding: 12px;
+    vertical-align: middle;
+}
+
+.update-form {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.update-form__item {
+    width: 100%;
+
+}
+
+.update-form__item-input {
+    width: 100%;
+    outline: none;
+        border: 1px solid transparent;
+        /* 編集可能であることを示唆する境界線 */
+        padding: 5px 0;
+        transition: border-color 0.3s;
+}
+
+.update-form__item-p {
+    text-align: left;
+    font-size: 14px;
+}
+
+.update-form__button {
+    width: 50px;
+        /* ボタンの幅を調整 */
+    flex-shrink: 0;
+    margin-left: 10px;
+}
+
+.update-form__button-submit {
+    padding: 8px;
+    width: 100%;
+    border: none;
+    border-radius: 5px;
+    background: #0000ff;
+    color: #fff;
+    cursor: pointer;
+}
+
+.delete-form__button {
+    width: 50px;
+        /* ボタンの幅を調整 */
+    flex-shrink: 0;
+    margin-left: 10px;
+}
+
+.delete-form__button-submit {
+    padding: 8px;
+    width: 100%;
+    border: none;
+    border-radius: 5px;
+    background: #ff0000;
+    color: #fff;
+    cursor: pointer;
+}
+
+.pagination {
+    /* todo-tableと同じ幅と中央寄せを適用 */
+    margin: 20px auto;
+    width: 70%;
+    text-align: center;
+    /* ページネーションリンクを中央に寄せる */
+}
+
+/* ページネーション全体 (ul要素) */
+.pagination ul.pagination {
+    display: inline-flex;
+    /* ul要素をインラインフレックスにして横並びにする */
+    padding-left: 0;
+    list-style: none;
+    border-radius: .25rem;
+    margin: 10px 0;
+    /* Bootstrapのデフォルトマージンをリセットし、上下に余白を追加 */
+}
+
+/* ページリンクを囲む要素（li要素） */
+.pagination .page-item {
+    margin: 0;
+}
+
+/* ページリンク本体 (aタグまたはspanタグ) */
+.pagination .page-link {
+    display: block;
+    padding: 8px 12px;
+    border: 1px solid #ddd;
+    color: #000;
+    text-decoration: none;
+    transition: background-color 0.2s;
+    /* リンク間の境界線を調整するために左側に-1pxマージンを設定 */
+    margin-left: -1px;
+    /* ページリンク内のアイコンや文字のサイズを適切に設定 */
+    font-size: 16px;
+}
+
+.pagination .page-link:hover {
+    background-color: #f0f0f0;
+    z-index: 2;
+    /* ホバー時に境界線が重ならないように */
+}
+
+/* 最初のリンクの角を丸くする */
+.pagination .page-item:first-child .page-link {
+    margin-left: 0;
+    /* 最初はマージン不要 */
+    border-top-left-radius: 3px;
+    border-bottom-left-radius: 3px;
+}
+
+/* 最後のリンクの角を丸くする */
+.pagination .page-item:last-child .page-link {
+    border-top-right-radius: 3px;
+    border-bottom-right-radius: 3px;
+}
+
+/* 現在のページ（アクティブなページ）のスタイル */
+.pagination .page-item.active .page-link {
+    background-color: #000;
+    border-color: #000;
+    color: #fff;
+    pointer-events: none;
+    /* クリック不可にする */
+    z-index: 3;
+    /* アクティブなページを最前面に */
+}
+
+/* 無効化された（disabled）リンクのスタイル */
+.pagination .page-item.disabled .page-link {
+    color: #aaa;
+    pointer-events: none;
+    background-color: #fff;
+    border-color: #eee;
+}
+
+/* アイコンやテキストのサイズを標準に戻す */
+.pagination .page-link span {
+    font-size: 16px;
+    line-height: 1;
+}
+
+/* ★追加修正: 結果表示テキスト (Showing 1 to 10 of 25 results) のスタイル調整 */
+/* Laravelのbootstrapビューではこのテキストは <p> タグで出力されるため、これを中央寄せにします */
+.pagination>p {
+    text-align: center;
+    /* 親要素の.paginationに設定済みだが、明示的に指定 */
+    margin-top: 10px;
+    /* ページネーションリンクとの間に少しスペースを空ける */
+}
+
+svg.w-5.h-5 {
+    /*paginateメソッドの矢印の大きさ調整のために追加*/
+    width: 30px;
+    height: 30px;
+}

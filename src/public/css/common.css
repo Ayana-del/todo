@@ -1,0 +1,62 @@
+/*このCSSはWebサイトのヘッダー部分の基本的なレイアウトとスタイルを設定*/
+
+
+/*header全体（<header class="header">）の背景色を黒に設定する*/
+.header {
+    /*header全体（<header class="header">）の背景色を黒に設定する*/
+    background: #000;
+}
+
+.header__inner {
+    /*左右のマージンを自動（auto）にし、要素を中央揃えにする*/
+    margin: 0 auto;
+    /*上下に20px,左右に15pxのパディング（内側の余白）を設定する*/
+    padding: 20px 15px;
+    /*コンテンツの最大値を1230pxに制限し、大きな画面でも広がりすぎないようにする*/
+    max-width: 1230px;
+}
+
+.header-utilities {
+    /*要素(ロゴナビゲーション)をFlexコンテナとして扱う*/
+    display: flex;
+    /*コンテナ内のアイテムを垂直方向(上下)の中央に揃える*/
+    align-items: center;
+    /*コンテナ内のアイテムを水平方向（左右）に等間隔で配慮し、両端に寄せる*/
+    justify-content: space-between;
+}
+.header__logo {
+    /*文字色を白に設定する*/
+    color: #fff;
+    /*テキストの装飾（通常は下線）を削除する*/
+    text-decoration: none;
+    /*文字を太字にする*/
+    font-weight: bold;
+    /*フォントサイズを２４pxに設定する*/
+    font-size: 24px;
+}
+
+.header-right-nav{
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+
+.header-nav__link {
+    /*文字色を白に設定する*/
+    color: #fff;
+    /*テキスト装飾(下線)を削除する*/
+    text-decoration: none;
+}
+
+.category-list-link{
+    white-space: nowrap;
+}
+
+
+
+
+/*ヘッダーの背景を黒*/
+/*ヘッダー内のコンテンツを中央に配置、最大幅を設定してレスポンシブ対応の基盤を作る*/
+/*Flexboxを使って、ロゴとナビゲーションなどの要素を左右に配置、垂直方向で中央揃え*/
+/*ロゴとナビゲーションの色を白に設定s、下線を消す（.header__logo,.header-nav__link）*/
