@@ -24,8 +24,7 @@
                 {{-- カードの本文部分（フォーム本体） --}}
                 <div class="card-body">
                     {{-- 会員登録フォームの開始 --}}
-                    {{-- method="POST"でデータを送信し、action="/register"で送信先URLを指定 --}}
-                    <form method="POST" action="/register" novalidate>
+                    <form method="POST" action="{{ route('register.store') }}" novalidate>
                         {{-- @csrf：CSRF対策のためのトークンを埋め込む。Laravelでは必須 --}}
                         @csrf
 
@@ -37,10 +36,10 @@
                             <div class="col-md-6">
                                 {{-- お名前入力フィールド --}}
                                 {{-- @errorディレクティブで、検証エラー時に'is-invalid'クラスを付与 --}}
-                                <input id="name" type="text" class="form-control @error('name') is-invalid @enderror" name="name" value="{{ old('name') }}" required autocomplete="name" autofocus>
+                                <input id="name" type="text" class="form-control @error('お名前') is-invalid @enderror" name="お名前" value="{{ old('お名前') }}" required autocomplete="name" autofocus>
 
                                 {{-- @error('name')：お名前に関する検証エラーが存在する場合に表示 --}}
-                                @error('name')
+                                @error('お名前')
                                 <span class="invalid-feedback" role="alert">
                                     {{-- エラーメッセージの表示 --}}
                                     <strong>{{ $message }}</strong>
@@ -56,10 +55,10 @@
                             {{-- 入力フィールドを囲む列 --}}
                             <div class="col-md-6">
                                 {{-- メールアドレス入力フィールド --}}
-                                <input id="email" type="email" class="form-control @error('email') is-invalid @enderror" name="email" value="{{ old('email') }}" required autocomplete="email">
+                                <input id="email" type="email" class="form-control @error('メールアドレス') is-invalid @enderror" name="メールアドレス" value="{{ old('メールアドレス') }}" required autocomplete="email">
 
-                                {{-- @error('email')：メールアドレスに関する検証エラーが存在する場合に表示 --}}
-                                @error('email')
+                                {{-- @error('メールアドレス')：メールアドレスに関する検証エラーが存在する場合に表示 --}}
+                                @error('メールアドレス')
                                 <span class="invalid-feedback" role="alert">
                                     {{-- エラーメッセージの表示 --}}
                                     <strong>{{ $message }}</strong>
@@ -75,10 +74,10 @@
                             {{-- 入力フィールドを囲む列 --}}
                             <div class="col-md-6">
                                 {{-- パスワード入力フィールド --}}
-                                <input id="password" type="password" class="form-control @error('password') is-invalid @enderror" name="password" required autocomplete="new-password">
+                                <input id="password" type="password" class="form-control @error('パスワード') is-invalid @enderror" name="パスワード" required autocomplete="new-password">
 
-                                {{-- @error('password')：パスワードに関する検証エラーが存在する場合に表示 --}}
-                                @error('password')
+                                {{-- @error('パスワード')：パスワードに関する検証エラーが存在する場合に表示 --}}
+                                @error('パスワード')
                                 <span class="invalid-feedback" role="alert">
                                     {{-- エラーメッセージの表示 --}}
                                     <strong>{{ $message }}</strong>
@@ -94,7 +93,7 @@
                             {{-- 入力フィールドを囲む列 --}}
                             <div class="col-md-6">
                                 {{-- 確認用パスワード入力フィールド。name属性は'password_confirmation'がLaravelの規約 --}}
-                                <input id="password-confirm" type="password" class="form-control" name="password_confirmation" required autocomplete="new-password">
+                                <input id="password-confirm" type="password" class="form-control" name="パスワード_confirmation" required autocomplete="new-password">
                             </div>
                         </div>
 

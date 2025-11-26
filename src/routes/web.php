@@ -9,6 +9,7 @@ use App\Http\Controllers\Auth\AuthenticatedSessionController;
 use App\Http\Controllers\Auth\PasswordResetLinkController;
 use App\Http\Controllers\AuthController;
 
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -19,8 +20,14 @@ use App\Http\Controllers\AuthController;
 | contains the "web" middleware group. Now create something great!
 |
 */
-//GETリクエストが'/'(ルートURL)に来たとき、TodoControllerのindexメソッドを実行する。
-//役割：Todoリストの一覧表示（ビューの表示）
+
+Route::get('/register', [AuthController::class, 'createRegistrationForm'])->name('register');
+Route::post('/register', [AuthController::class, 'register'])->name('register.store');
+
+Route::get('/login', [AuthController::class, 'createSessionForm'])->name('login');
+Route::post('/login', [AuthController::class, 'storeSession'])->name('login.store');
+Route::post('/logout', [AuthController::class, 'destroySession'])->name('logout');
+
 
 // 'auth'ミドルウェアを適用するグループ定義
 // このグループ内のすべてのルートは、ユーザーがログインしていることを確認する（認証が必要な）
