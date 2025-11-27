@@ -59,8 +59,8 @@ class AuthController extends Controller
 
         // 認証失敗
         return back()->withErrors([
-            'メールアドレス' => '入力された認証情報が記録と一致しません。',
-        ])->onlyInput('メールアドレス');
+            'email' => '入力された認証情報が記録と一致しません。',
+        ])->onlyInput('email');
     }
 
         //ユーザーをログアウトさせ、セッションを終了する（POST/logout)
