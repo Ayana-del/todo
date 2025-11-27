@@ -25,6 +25,7 @@ class Todo extends Model
         'category_id',
         'content',
         'due_date',
+        'user_id',  //ユーザーIDをfillableに設定
     ];
 
     /**

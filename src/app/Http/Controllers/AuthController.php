@@ -24,9 +24,9 @@ class AuthController extends Controller
         $validatedData = $request->validated();
 
         $user = User::create([
-            'name' => $validatedData['お名前'],
-            'email' => $validatedData['メールアドレス'],
-            'password' => Hash::make($validatedData['パスワード']), // ハッシュ化
+            'name' => $validatedData['name'],
+            'email' => $validatedData['email'],
+            'password' => Hash::make($validatedData['password']), // ハッシュ化
         ]);
 
         Auth::login($user); // 登録後、自動でログイン

@@ -12,6 +12,8 @@ use App\Models\Todo;
 // HTTPリクエスト（ユーザーからの入力データなど）を扱う Request クラスをインポートする。
 use Illuminate\Http\Request;
 
+use Illuminate\Support\Facades\Auth;
+
 // TodoControllerクラスを定義し、Laravelの基底コントローラ（Controller)を継承
 class TodoController extends Controller
 {
@@ -24,6 +26,7 @@ class TodoController extends Controller
      */
     public function index()
     {
+        $user = Auth::user();
         // ページネーションを適用: 1ページあたり10件のToDoを、関連するカテゴリデータととも
         // に最新の更新順（latest()）で取得する
         $todos = Todo::with('category')->latest()->paginate(10);
@@ -75,10 +78,15 @@ class TodoController extends Controller
     public function store(TodoRequest $request)
     {
         // リクエストデータから'category_id'、'content'、'due_date'フィールドのみを抽出する。
-        $todo = $request->only(['category_id', 'content', 'due_date']);
+        $todoData = $request->only(['category_id', 'content', 'due_date']);
+
+        $todo['user_id'] = $request->user()->id;
+
+        //抽出したデータでTodoモデルの新しいレコードをデータベースに作成する
+        Todo::create($todoData);
 
         // 抽出したデータで Todo モデルの新しいレコードをデータベースに作成する
-        Todo::create($todo);
+        Todo::create($todoData);
 
         // ルートURL('/')にリダイレクトし、セッションに成功メッセージを一時的に保存する。
         return redirect('/')->with('message', 'Todoを作成しました');
@@ -120,4 +128,6 @@ class TodoController extends Controller
         // ルートURL（'/'）にリダイレクトし、セッションに成功メッセージを一時的に保存する
         return redirect('/')->with('message', 'Todoを削除しました');
     }
+
+
 }

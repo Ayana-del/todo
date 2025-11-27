@@ -19,10 +19,9 @@ return new class extends Migration
     public function up():void
     {
         Schema::table('todos', function (Blueprint $table) {
-            //date型のカラム’due_date'を追加する。
-            //nullable()はNULL値（値なし）を許容する設定。
-            //after('category-id')は、’category_id'カラムの直後に追加する指定（オプション）
-            $table->date('due_date')->nullable()->after('category_id');
+            $table->unsignedBigInteger('user_id')->after('category_id');
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
+            $table->date('due_date')->nullable()->after('user_id'); // user_idの後に移動
         });
     }
 
@@ -37,6 +36,11 @@ return new class extends Migration
         //'todos'テーブルに対して操作を行う
         //'due_date'カラムを削除する（upメソッドで行った変更を取り消す）
         Schema::table('todos', function (Blueprint $table) {
+            // 外部キー制約を解除
+            $table->dropForeign(['user_id']);
+            // user_id カラムを削除
+            $table->dropColumn('user_id');
+            //'due_date'カラムを削除
             $table->dropColumn('due_date');
         });
     }
