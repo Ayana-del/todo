@@ -35,11 +35,16 @@
     font-size: 24px;
 }
 
-.header-right-nav{
+.header-nav{
     display: flex;
-    align-items: center;
-    gap: 15px;
+    flex-direction: row;
+    gap: 10px;
 }
+
+.header-nav__item form {
+    display: contents;
+}
+
 
 
 .header-nav__link {
