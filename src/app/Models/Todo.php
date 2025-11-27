@@ -10,6 +10,12 @@ class Todo extends Model
 {
     use HasFactory;
 
+    //TodoCOntroller@index で Auth::user()->todosが使えるようになる
+    //このTodoは一人のUserに属する（belongsTo)
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
     /**
      * マスアサインメント可能な属性.
      *

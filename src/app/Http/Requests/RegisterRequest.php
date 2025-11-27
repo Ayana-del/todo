@@ -24,9 +24,9 @@ class RegisterRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'お名前' => 'required|string|min:3|max:50',
-            'メールアドレス' => 'required|email|unique:users',
-            'パスワード' => [
+            'name' => 'required|string|min:3|max:50',
+            'email' => 'required|email|unique:users',
+            'password' => [
                 'required',
                 'min:8',
                 'max:15',
@@ -42,22 +42,22 @@ class RegisterRequest extends FormRequest
     {
         return [
             // --- お名前 ---
-            'お名前.required' => 'お名前を入力してください。',
-            'お名前.min' => 'お名前は3文字以上で入力してください。',
-            'お名前.max' => 'お名前は50文字以内で入力してください。',
+            'name.required' => 'お名前を入力してください。',
+            'name.min' => 'お名前は3文字以上で入力してください。',
+            'name.max' => 'お名前は50文字以内で入力してください。',
 
             // --- メールアドレス ---
-            'メールアドレス.required' => 'メールアドレスを入力してください。',
-            'メールアドレス.email' => '正しいメールアドレス形式で入力してください。',
-            'メールアドレス.unique' => 'このメールアドレスは既に登録されています。',
+            'email.required' => 'メールアドレスを入力してください。',
+            'email.email' => '正しいメールアドレス形式で入力してください。',
+            'email.unique' => 'このメールアドレスは既に登録されています。',
 
             // --- パスワード ---
-            'パスワード.required' => 'パスワードを入力してください。',
-            'パスワード.min' => 'パスワードは8文字以上で設定してください。',
-            'パスワード.max' => 'パスワードは15文字以内で設定してください。',
-            'パスワード.confirmed' => 'パスワードと確認用パスワードが一致しません。',
+            'password.required' => 'パスワードを入力してください。',
+            'password.min' => 'パスワードは8文字以上で設定してください。',
+            'password.max' => 'パスワードは15文字以内で設定してください。',
+            'password.confirmed' => 'パスワードと確認用パスワードが一致しません。',
             // 複雑性ルールの共通メッセージ
-            'パスワード.regex' => 'パスワードには、小文字、数字をそれぞれ1文字以上含めてください。',
+            'password.regex' => 'パスワードには、小文字、数字をそれぞれ1文字以上含めてください。',
         ];
     }
 }

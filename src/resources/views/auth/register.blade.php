@@ -36,10 +36,10 @@
                             <div class="col-md-6">
                                 {{-- お名前入力フィールド --}}
                                 {{-- @errorディレクティブで、検証エラー時に'is-invalid'クラスを付与 --}}
-                                <input id="name" type="text" class="form-control @error('お名前') is-invalid @enderror" name="お名前" value="{{ old('お名前') }}" required autocomplete="name" autofocus>
+                                <input id="name" type="text" class="form-control @error('name') is-invalid @enderror" name="name" value="{{ old('name') }}" required autocomplete="name" autofocus>
 
                                 {{-- @error('name')：お名前に関する検証エラーが存在する場合に表示 --}}
-                                @error('お名前')
+                                @error('name')
                                 <span class="invalid-feedback" role="alert">
                                     {{-- エラーメッセージの表示 --}}
                                     <strong>{{ $message }}</strong>
@@ -55,10 +55,10 @@
                             {{-- 入力フィールドを囲む列 --}}
                             <div class="col-md-6">
                                 {{-- メールアドレス入力フィールド --}}
-                                <input id="email" type="email" class="form-control @error('メールアドレス') is-invalid @enderror" name="メールアドレス" value="{{ old('メールアドレス') }}" required autocomplete="email">
+                                <input id="email" type="email" class="form-control @error('email') is-invalid @enderror" name="email" value="{{ old('email') }}" required autocomplete="email">
 
                                 {{-- @error('メールアドレス')：メールアドレスに関する検証エラーが存在する場合に表示 --}}
-                                @error('メールアドレス')
+                                @error('email')
                                 <span class="invalid-feedback" role="alert">
                                     {{-- エラーメッセージの表示 --}}
                                     <strong>{{ $message }}</strong>
@@ -74,10 +74,10 @@
                             {{-- 入力フィールドを囲む列 --}}
                             <div class="col-md-6">
                                 {{-- パスワード入力フィールド --}}
-                                <input id="password" type="password" class="form-control @error('パスワード') is-invalid @enderror" name="パスワード" required autocomplete="new-password">
+                                <input id="password" type="password" class="form-control @error('password') is-invalid @enderror" name="password" required autocomplete="new-password">
 
-                                {{-- @error('パスワード')：パスワードに関する検証エラーが存在する場合に表示 --}}
-                                @error('パスワード')
+                                {{-- @error('password')：パスワードに関する検証エラーが存在する場合に表示 --}}
+                                @error('password')
                                 <span class="invalid-feedback" role="alert">
                                     {{-- エラーメッセージの表示 --}}
                                     <strong>{{ $message }}</strong>
@@ -93,7 +93,7 @@
                             {{-- 入力フィールドを囲む列 --}}
                             <div class="col-md-6">
                                 {{-- 確認用パスワード入力フィールド。name属性は'password_confirmation'がLaravelの規約 --}}
-                                <input id="password-confirm" type="password" class="form-control" name="パスワード_confirmation" required autocomplete="new-password">
+                                <input id="password-confirm" type="password" class="form-control" name="password_confirmation" required autocomplete="new-password">
                             </div>
                         </div>
 

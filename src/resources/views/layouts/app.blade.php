@@ -41,7 +41,7 @@
                         @if (Auth::check())
                         <li class="header-nav__item">
                             {{-- ログイン済みの場合：ログアウトボタンを表示 --}}
-                            <form action="/logout" method="post">
+                            <form action="{{ route('logout') }}" method="post">
                                 @csrf
                                 {{-- ログアウトを実行するためのPOSTリクエストを送信するボタン --}}
                                 <button class="header-nav__link header-nav__button-reset logout-button" type="submit">
@@ -52,15 +52,15 @@
                         @else
                         {{-- 未ログインの場合：ログインと会員登録へのリンクを表示 --}}
                         <li class="header-nav__item">
-                            <a class="header-nav__link" href=/login>ログイン</a>
+                            <a class="header-nav__link" href="{{ route('login') }}">ログイン</a>
                         </li>
                         <li class="header-nav__item">
-                            <a class="header-nav__link" href="/register">会員登録</a>
+                            <a class="header-nav__link" href="{{ route('register') }}">会員登録</a>
                         </li>
                         @endif
                         <li class="header-nav__item">
                             {{-- カテゴリ一覧ページ（/categories）へのリンク --}}
-                            <a class="header-nav__link" href="/categories">カテゴリ一覧</a>
+                            <a class="header-nav__link" href="{{ route('category.index') }}">カテゴリ一覧</a>
                         </li>
                     </ul>
                     {{-- ナビゲーションの終了 --}}

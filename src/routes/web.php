@@ -50,7 +50,7 @@ Route::middleware('auth')->group(function () {
 
     // GETリクエストが'/categories'に来たとき、CategoryControllerのindexメソッドを実行する。
     // 役割：カテゴリ一覧ページを表示する
-    Route::get('/categories', [CategoryController::class,  'index']);
+    Route::get('/categories', [CategoryController::class,  'index'])->name('category.index');
     // POSTリクエストが'/categories'に来たとき、CategoryControllerのstoreメソッドを実行する。
     // 役割：新しいカテゴリをデータベースに保存（作成）
     Route::post('/categories', [CategoryController::class, 'store']);

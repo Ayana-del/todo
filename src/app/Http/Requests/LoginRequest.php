@@ -25,9 +25,9 @@ class LoginRequest extends FormRequest
     {
         return [
             // メールアドレス: 必須、形式チェック、最大文字数チェック
-            'メールアドレス' => 'required|email|max:255',
+            'email' => 'required|email|max:255',
             // パスワード: 必須チェック
-            'パスワード' => 'required|string',
+            'password' => 'required|string',
         ];
     }
 
@@ -35,13 +35,13 @@ class LoginRequest extends FormRequest
     {
         return [
             // --- メールアドレス ---
-            'メールアドレス.required' => 'メールアドレスを入力してください。',
-            'メールアドレス.email' => '正しいメールアドレス形式で入力してください。',
-            'メールアドレス.max' => 'メールアドレスは255文字以内で入力してください。',
+            'email.required' => 'メールアドレスを入力してください。',
+            'email.email' => '正しいメールアドレス形式で入力してください。',
+            'email.max' => 'メールアドレスは255文字以内で入力してください。',
 
             // --- パスワード ---
-            'パスワード.required' => 'パスワードを入力してください。',
-            'パスワード.string' => 'パスワードは文字列形式で入力してください。',
+            'password.required' => 'パスワードを入力してください。',
+            'password.string' => 'パスワードは文字列形式で入力してください。',
         ];
     }
 }
