@@ -80,12 +80,9 @@ class TodoController extends Controller
         // リクエストデータから'category_id'、'content'、'due_date'フィールドのみを抽出する。
         $todoData = $request->only(['category_id', 'content', 'due_date']);
 
-        $todo['user_id'] = $request->user()->id;
+        $todoData['user_id'] = $request->user()->id;
 
         //抽出したデータでTodoモデルの新しいレコードをデータベースに作成する
-        Todo::create($todoData);
-
-        // 抽出したデータで Todo モデルの新しいレコードをデータベースに作成する
         Todo::create($todoData);
 
         // ルートURL('/')にリダイレクトし、セッションに成功メッセージを一時的に保存する。

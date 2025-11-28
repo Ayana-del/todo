@@ -21,7 +21,7 @@ return new class extends Migration
         Schema::table('todos', function (Blueprint $table) {
             $table->unsignedBigInteger('user_id')->after('category_id');
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
-            $table->date('due_date')->nullable()->after('user_id'); // user_idの後に移動
+            $table->date('due_date')->nullable()->after('category_id'); // user_idの後に移動
         });
     }
 

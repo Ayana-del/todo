@@ -110,69 +110,58 @@
             </tr>
             {{-- コントローラーから渡された$todosコレクションをループ処理する。 --}}
             @foreach ($todos as $todo)
-            {{-- 個々のTodoアイテムの行 --}}
             <tr class="todo-table__row">
-                {{-- Todo内容のセル (更新フォーム内) --}}
-                <td class="todo-table__item">
-                    {{-- Todoを更新するためのフォーム。PATCHメソッドで送信 --}}
+
+                {{-- 1. Todo内容・カテゴリ・期日・更新ボタンをすべて含むセル --}}
+                <td class="todo-table__item" colspan="4">
+                    {{-- Todoを更新するためのフォーム --}}
                     <form class="update-form" action="/todos/update" method="POST">
                         @method('PATCH')
                         @csrf
-                        {{-- 更新対象のTodoのIDを隠しフィールドとして保持 --}}
+
+                        {{-- 更新対象のID (隠しフィールド) --}}
                         <input type="hidden" name="id" value="{{ $todo['id'] }}">
-                        {{-- 現在のTodo内容を表示し、編集するための入力フィールド --}}
-                        <input class="update-form__item-input" type="text" name="content" value="{{ $todo['content'] }}">
-                </td>
 
-                {{-- カテゴリ名のセル --}}
-                <td class="todo-table__item">
-                    {{-- カテゴリを選択・変更するためのドロップダウンリスト --}}
-                    <select class="update-form__item-input" name="category_id">
-                        @foreach ($categories as $category)
-                        <option value="{{ $category['id'] }}" {{ $todo['category_id'] == $category['id'] ? 'selected' : '' }}>
-                            {{ $category['name'] }}
-                        </option>
-                        @endforeach
-                    </select>
-                </td>
+                        {{-- Todo内容 --}}
+                        <div class="update-form__item" style="width: 30%;">
+                            <input class="update-form__item-input" type="text" name="content" value="{{ $todo['content'] }}">
+                        </div>
 
-                {{-- 期日のセル --}}
-                <td class="todo-table__item">
-                    {{-- 現在の期日を表示（日付フォーマットの調整） --}}
-                    <p class="update-form__item-p">
-                        {{ $todo['due_date'] ? date('Y/m/d', strtotime($todo['due_date'])) : '未設定' }}
-                    </p>
-                    {{-- 期日を変更するための日付入力フィールド --}}
-                    <input class="update-form__item-input" type="date" name="due_date"
-                        value="{{ $todo['due_date'] }}">
-                </td>
+                        {{-- カテゴリ --}}
+                        <div class="update-form__item" style="width: 25%;">
+                            <select class="update-form__item-input" name="category_id">
+                                @foreach ($categories as $category)
+                                <option value="{{ $category['id'] }}" {{ $todo['category_id'] == $category['id'] ? 'selected' : '' }}>
+                                    {{ $category['name'] }}
+                                </option>
+                                @endforeach
+                            </select>
+                        </div>
 
-                {{-- 更新ボタンのセル --}}
-                <td class="todo-table__item">
-                    <div class="update-form__button">
-                        {{-- フォームを送信する「更新」ボタン --}}
-                        <button class="update-form__button-submit" type="submit">更新</button>
-                    </div>
-                    {{-- Todo内容の入力フィールドと更新ボタンを同じフォームに入れるため、フォームを閉じる --}}
+                        {{-- 期日 --}}
+                        <div class="update-form__item" style="width: 25%;">
+                            <input class="update-form__item-input" type="date" name="due_date" value="{{ $todo['due_date'] }}">
+                        </div>
+
+                        {{-- 更新ボタン --}}
+                        <div class="update-form__button" style="width: 10%;">
+                            <button class="update-form__button-submit" type="submit">更新</button>
+                        </div>
                     </form>
                 </td>
 
-                {{-- 削除フォームとボタンのセル --}}
+                {{-- 2. 削除ボタンのセル (単独で配置) --}}
                 <td class="todo-table__item">
-                    {{-- Todoを削除するためのフォーム。DELETEメソッドで送信 --}}
                     <form class="delete-form" action="/todos/delete" method="POST">
                         @method('DELETE')
                         @csrf
                         <div class="delete-form__button">
-                            {{-- 削除対象のTodoのIDを隠しフィールドとして保持 --}}
                             <input type="hidden" name="id" value="{{ $todo['id'] }}">
-                            {{-- フォームを送信する「削除」ボタン --}}
                             <button class="delete-form__button-submit" type="submit">削除</button>
                         </div>
                     </form>
                 </td>
             </tr>
-            {{-- ループの終了 --}}
             @endforeach
         </table>
     </div>
