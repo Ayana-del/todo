@@ -42,6 +42,10 @@ Route::middleware('auth')->group(function () {
     // 役割：新しいTodoアイテムをデータベースに保存（作成）
     Route::post('/todos', [TodoController::class, 'store']);
     // PATCHリクエストが'/todos/update'に来たとき、TodoControllerのupdateメソッドを実行する。
+
+    //Todoの完了を切り替えるため
+    Route::patch('/todos/{id}/complete', [TodoController::class, 'complete'])->name('todo.complete');
+
     // 役割：既存のTodoアイテムの内容や状態を更新
     Route::patch('/todos/update', [TodoController::class, 'update']);
     // DELETEリクエストが'/todos/delete'に来たとき、TodoControllerのdestroyメソッドを実行する。

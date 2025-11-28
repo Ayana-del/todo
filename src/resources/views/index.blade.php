@@ -102,6 +102,7 @@
         <table class="todo-table__inner">
             {{-- Todoテーブルヘッダー行 --}}
             <tr class="todo-table__row">
+                <th class="todo-table__header"></th>{{--チェックボックス用--}}
                 <th class="todo-table__header">Todo</th>
                 <th class="todo-table__header">カテゴリ</th>
                 <th class="todo-table__header">期日</th>
@@ -112,65 +113,63 @@
             @foreach ($todos as $todo)
             <tr class="todo-table__row">
 
-                {{-- 1. Todo内容・カテゴリ・期日・更新ボタンをすべて含むセル --}}
-                <td class="todo-table__item" colspan="4">
-                    {{-- Todoを更新するためのフォーム --}}
-                    <form class="update-form" action="/todos/update" method="POST">
-                        @method('PATCH')
-                        @csrf
-
-                        {{-- 更新対象のID (隠しフィールド) --}}
-                        <input type="hidden" name="id" value="{{ $todo['id'] }}">
-
-                        {{-- Todo内容 --}}
-                        <div class="update-form__item" style="width: 30%;">
-                            <input class="update-form__item-input" type="text" name="content" value="{{ $todo['content'] }}">
-                        </div>
-
-                        {{-- カテゴリ --}}
-                        <div class="update-form__item" style="width: 25%;">
-                            <select class="update-form__item-input" name="category_id">
-                                @foreach ($categories as $category)
-                                <option value="{{ $category['id'] }}" {{ $todo['category_id'] == $category['id'] ? 'selected' : '' }}>
-                                    {{ $category['name'] }}
-                                </option>
-                                @endforeach
-                            </select>
-                        </div>
-
-                        {{-- 期日 --}}
-                        <div class="update-form__item" style="width: 25%;">
-                            <input class="update-form__item-input" type="date" name="due_date" value="{{ $todo['due_date'] }}">
-                        </div>
-
-                        {{-- 更新ボタン --}}
-                        <div class="update-form__button" style="width: 10%;">
-                            <button class="update-form__button-submit" type="submit">更新</button>
-                        </div>
+                {{-- 1. 完了チェックボックスのセル --}}
+                <td class="todo-table__item todo-item-checkbox">
+                    <form class="complete-form" action="{{ route('todo.complete', ['id' => $todo['id']]) }}" method="POST">
+                        @method('PATCH') @csrf
+                        <input type="checkbox" name="completed" value="1" onchange="this.form.submit()" {{ $todo['completed'] ? 'checked' : '' }}>
                     </form>
                 </td>
+                <form class="update-form update-form__wrapper" action="/todos/update" method="POST">
+                    @method('PATCH') @csrf
+                    <input type="hidden" name="id" value="{{ $todo['id'] }}">
 
-                {{-- 2. 削除ボタンのセル (単独で配置) --}}
-                <td class="todo-table__item">
+                    {{-- 2. Todo内容のセル --}}
+                    <td class="todo-table__item todo-item-content">
+                        <input class="update-form__item-input" type="text" name="content" value="{{ $todo['content'] }}">
+                    </td>
+
+                    {{-- 3. カテゴリのセル --}}
+                    <td class="todo-table__item todo-item-category">
+                        <select class="update-form__item-input" name="category_id">
+                            @foreach ($categories as $category)
+                            <option value="{{ $category['id'] }}" {{ $todo['category_id'] == $category['id'] ? 'selected' : '' }}>
+                                {{ $category['name'] }}
+                            </option>
+                            @endforeach
+                        </select>
+                    </td>
+
+                    {{-- 4. 期日のセル --}}
+                    <td class="todo-table__item todo-item-due-date">
+                        <input class="update-form__item-input" type="date" name="due_date" value="{{ $todo['due_date'] }}">
+                    </td>
+
+                    {{-- 5. 更新ボタンのセル --}}
+                    <td class="todo-table__item todo-item-update-button">
+                        <button class="update-form__button-submit" type="submit">更新</button>
+                    </td>
+                </form>
+
+                {{-- 6. 削除ボタンのセル --}}
+                <td class="todo-table__item todo-item-delete-button">
                     <form class="delete-form" action="/todos/delete" method="POST">
-                        @method('DELETE')
-                        @csrf
-                        <div class="delete-form__button">
-                            <input type="hidden" name="id" value="{{ $todo['id'] }}">
-                            <button class="delete-form__button-submit" type="submit">削除</button>
-                        </div>
+                        @method('DELETE') @csrf
+                        <input type="hidden" name="id" value="{{ $todo['id'] }}">
+                        <button class="delete-form__button-submit" type="submit">削除</button>
                     </form>
                 </td>
             </tr>
             @endforeach
         </table>
     </div>
-    {{-- ★ ページネーションリンクの追加 ★ --}}
-    <div class="pagination">
-        {{-- Laravelのページネーションリンクを表示する（$todos変数がページネーターインスタンスである必要あり） --}}
-        {{ $todos->links() }}
-    </div>
-    {{-- ★ ページネーションリンクの追加 終 ★ --}}
+</div>
+{{-- ★ ページネーションリンクの追加 ★ --}}
+<div class="pagination">
+    {{-- Laravelのページネーションリンクを表示する（$todos変数がページネーターインスタンスである必要あり） --}}
+    {{ $todos->links() }}
+</div>
+{{-- ★ ページネーションリンクの追加 終 ★ --}}
 
 </div>
 {{-- 'content'セクションの終了 --}}

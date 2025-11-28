@@ -112,10 +112,10 @@
     font-weight: bold;
     width: auto;
 }
-
+/*チェックボックス*/
 .todo-table__inner th:nth-child(1),
 .todo-table__inner td:nth-child(1) {
-    width: 30%;
+    width: 3%;
 }
 
 /* Todo内容 */
@@ -133,19 +133,19 @@
 /* 期日 */
 .todo-table__inner th:nth-child(4),
 .todo-table__inner td:nth-child(4) {
-    width: 10%;
+    width: 25%;
 }
 
 /* 更新ボタン */
 .todo-table__inner th:nth-child(5),
 .todo-table__inner td:nth-child(5) {
-    width: 10%;
+    width: 12%;
 }
 
 /* 削除ボタン */
 
 .todo-table__item{
-    padding: 12px;
+    padding: 6px;
     vertical-align: middle;
 }
 
@@ -182,30 +182,32 @@
 }
 
 .update-form__button-submit {
-    padding: 8px;
-    width: 100%;
+    padding: 8px 12px;
     border: none;
     border-radius: 5px;
     background: #0000ff;
     color: #fff;
     cursor: pointer;
+    width: 60px;
+    flex-shrink: 0;
 }
 
 .delete-form__button {
-    width: 50px;
+    width: 100px;
         /* ボタンの幅を調整 */
     flex-shrink: 0;
-    margin-left: 10px;
+    margin-left: 0px;
 }
 
 .delete-form__button-submit {
-    padding: 8px;
+    padding: 8px 12px;
     width: 100%;
     border: none;
     border-radius: 5px;
     background: #ff0000;
     color: #fff;
     cursor: pointer;
+    width: 60px;
 }
 
 .pagination {
@@ -305,3 +307,4 @@ svg.w-5.h-5 {
     width: 30px;
     height: 30px;
 }
+

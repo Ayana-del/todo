@@ -75,6 +75,23 @@ class TodoController extends Controller
      * @param TodoRequest $request バリデーション済みのリクエストデータ
      * @return \Illuminate\Http\RedirectResponse
      */
+
+    public function complete($id)
+    {
+        // 認証ユーザーに属するTodoをIDで検索
+        // fail() を使用し、Todoが存在しない、またはユーザーに属さない場合は404を返す
+        $todo = Todo::where('user_id', Auth::id())->findOrFail($id);
+
+        // completed の値を反転させて更新
+        // 例: true -> false, false -> true
+        $todo->update([
+            'completed' => !$todo->completed // 現在の値の論理否定
+        ]);
+
+        // 元のページにリダイレクトして完了メッセージを表示
+        return redirect('/')->with('message', 'Todoの状態を更新しました');
+    }
+
     public function store(TodoRequest $request)
     {
         // リクエストデータから'category_id'、'content'、'due_date'フィールドのみを抽出する。

@@ -26,6 +26,7 @@ class Todo extends Model
         'content',
         'due_date',
         'user_id',  //ユーザーIDをfillableに設定
+        'completed',
     ];
 
     /**
