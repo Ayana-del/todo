@@ -2,7 +2,6 @@
 
 // このファイルがApp\Http\Controllers名前空間に属することを定義する。
 namespace App\Http\Controllers;
-
 // バリデーションルールを含むカスタムリクエストクラスをインポートする。
 use App\Http\Requests\TodoRequest;
 // Categoryモデル（カテゴリ情報を扱うクラス）をインポートする。
@@ -11,7 +10,7 @@ use App\Models\Category;
 use App\Models\Todo;
 // HTTPリクエスト（ユーザーからの入力データなど）を扱う Request クラスをインポートする。
 use Illuminate\Http\Request;
-
+//認証済みユーザーの情報を扱うファサードをインポート
 use Illuminate\Support\Facades\Auth;
 
 // TodoControllerクラスを定義し、Laravelの基底コントローラ（Controller)を継承
@@ -24,18 +23,52 @@ class TodoController extends Controller
      *
      * @return \Illuminate\View\View
      */
-    public function index()
+    //HTTPリクエストオブジェクトを受け取り、URLパラメータなどを取得
+    public function index(Request $request)
     {
-        $user = Auth::user();
-        // ページネーションを適用: 1ページあたり10件のToDoを、関連するカテゴリデータととも
-        // に最新の更新順（latest()）で取得する
-        $todos = Todo::with('category')->latest()->paginate(10);
+        // 1. ソート条件の定義
+        //データベースでソートを許可するカラム名の配列
+        $allowedSorts = ['due_date', 'created_at', 'category_id'];
+        //ソートパラメータがない場合のデフォルトのカラム
+        $defaultSort = 'created_at';
+
+        //URLパラメータからソートカラム（sort）と方向（direction）を取得
+        // get('パラメータ名', 'デフォルト値')
+        $sortColumn = $request->get('sort', $defaultSort);
+        // デフォルトのソート方向は降順（desc）
+        $sortDirection = $request->get('direction', 'desc');
+
+        // 不正な値のチェック (セキュリティと安定性のための防御処理)
+        // ユーザーが指定した $sortColumn が $allowedSorts に含まれているかチェックする。
+        if (!in_array($sortColumn, $allowedSorts)) {
+            $sortColumn = $defaultSort; //含まれていなければデフォルト値に戻す
+        }
+        //ユーザーが指定した $sortDirection が 'asc' または 'desc' かをチェックする。
+        if (!in_array(strtolower($sortDirection), ['asc', 'desc'])) {
+            $sortDirection = 'desc'; //含まれていなければ降順（desc）に戻す
+        }
+
+        // 2. クエリの構築とソート適用
+        $query = Todo::with('category'); //Todoモデルのクエリを開始し、リレーション（category）をEager Loadする
+
+        // ソート条件の適用
+        // データベースクエリにorderByメソッドを使って、指定されたカラムと方向で並び替えを適用
+        $query->orderBy($sortColumn, $sortDirection);
+
+        // ページネーションの実行
+        // 1ページあたり10件のToDoを取得する
+        $todos = $query->paginate(10)
+            // appends() でソートパラメータをページネーションリンクに引き継ぐ
+            //ページ遷移時にもソートの状態を維持するために、現在のソート条件をURLに追加する
+            ->appends(['sort' => $sortColumn, 'direction' => $sortDirection]);
 
         // Categoryモデルを使って、全てのカテゴリーデータを取得する（新規作成・検索フォーム用）。
         $categories = Category::all();
 
-        // 'index'ビューファイルを呼び出し、取得した $todos と $categories データをビューに渡す。
-        return view('index', compact('todos', 'categories'));
+        //Viewにデータを渡す
+        // 'index'ビューファイルを呼び出し、取得した $todos、$categories、および現在の$requestを渡す
+        // $requestをViewに渡すことで、Bladeで現在のソート状態（▲/▼マーク）を判定可能にする
+        return view('index', compact('todos', 'categories','request'));
     }
 
     /**
@@ -48,23 +81,44 @@ class TodoController extends Controller
      */
     public function search(Request $request)
     {
-        // Todoモデルから、関連カテゴリデータとともにデータを取得する
-        // categorySearch()、keywordSearch()、dueDateSearch()はTodoモデルに定義されたローカルスコープである必要がある。
-        $todos = Todo::with('category')
+        // 1. ソート条件の定義（indexメソッドと同様）
+        $allowedSorts = ['due_date', 'created_at', 'category_id'];
+        $defaultSort = 'created_at';
+
+        // 検索時もソート条件を適用できるようにパラメータを取得
+        $sortColumn = $request->get('sort', $defaultSort);
+        $sortDirection = $request->get('direction', 'desc');
+
+        if (!in_array($sortColumn, $allowedSorts)) {
+            $sortColumn = $defaultSort;
+        }
+        if (!in_array(strtolower($sortDirection), ['asc', 'desc'])) {
+            $sortDirection = 'desc';
+        }
+
+        // 2. 検索クエリの構築
+        $query = Todo::with('category')
+            // categorySearch()、keywordSearch()、dueDateSearch() はTodoモデルに定義されたローカルスコープを呼び出し、フィルタリングを行う
             ->categorySearch($request->category_id)
             ->keywordSearch($request->keyword)
-            // 期日検索ロジックを反映
-            ->dueDateSearch($request->due_date)
-            //get() を paginate(10) に変更し、ページネーションを適用する
-            ->paginate(10)
+            ->dueDateSearch($request->due_date);
+
+        // ★ソート条件の適用★
+        $query->orderBy($sortColumn, $sortDirection);
+
+        // 3. ページネーションの実行
+        $todos = $query->paginate(10)
             // withQueryString() を追加し、検索条件をページネーションリンクに含める
-            ->withQueryString();
+            ->withQueryString()
+            // ★appends() でソートパラメータも確実に引き継ぐ★
+            ->appends(['sort' => $sortColumn, 'direction' => $sortDirection]);
 
         // 全カテゴリーデータを取得する（検索フォームの選択肢表示用。）
         $categories = Category::all();
 
-        // 検索結果を表示する'index'ビューファイルを呼び出し、取得したデータを渡す。
-        return view('index', compact('todos', 'categories'));
+        // 4. Viewにデータを渡す
+        // 検索結果を表示する'index'ビューファイルを呼び出し、取得したデータを渡す
+        return view('index', compact('todos', 'categories', 'request')); // $requestをViewに渡す
     }
 
     /**

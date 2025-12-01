@@ -106,9 +106,33 @@
                 <th class="todo-table__header">Todo</th>
                 <th class="todo-table__header">カテゴリ</th>
                 <th class="todo-table__header">期日</th>
+                {{-- ソートメニュー全体を囲むコンテナ --}}
+                <div class="sort-select-container">
+
+                    {{-- ★JavaScriptで操作するためのプルダウンメニュー★ --}}
+                    <select id="sort-menu" class="sort-menu-select">
+                        <option value="">並べ替え</option> {{-- デフォルト表示 --}}
+                        <option value="due_date">期日順</option>
+                        <option value="created_at">作成順</option>
+                        <option value="category_id">カテゴリ順</option>
+                    </select>
+
+                    {{-- ★現在のソート状態を示すアイコン（任意）★ --}}
+                    {{-- 現在のソート条件をPHPで取得し、表示する --}}
+                    @php
+                    $currentSort = $request->get('sort');
+                    $currentDirection = $request->get('direction', 'desc');
+                    @endphp
+                    @if ($currentSort)
+                    <span class="sort-status-icon">
+                        @if ($currentDirection == 'asc') ▲ @else ▼ @endif
+                    </span>
+                    @endif
+                </div>
                 <th class="todo-table__header"></th> {{-- 更新ボタン用 --}}
                 <th class="todo-table__header"></th> {{-- 削除ボタン用 --}}
             </tr>
+
             {{-- コントローラーから渡された$todosコレクションをループ処理する。 --}}
             @foreach ($todos as $todo)
             <tr class="todo-table__row">
@@ -164,6 +188,34 @@
         </table>
     </div>
 </div>
+<script>
+    // ページロード時に実行
+    document.addEventListener('DOMContentLoaded', function() {
+        const sortMenu = document.getElementById('sort-menu');
+
+        // 1. URLから現在のソート条件を取得し、プルダウンに反映
+        const urlParams = new URLSearchParams(window.location.search);
+        const currentSort = urlParams.get('sort');
+
+        if (currentSort) {
+            sortMenu.value = currentSort;
+        }
+
+        // 2. プルダウンの選択が変更されたときにページをリロード（ソート条件を適用）
+        sortMenu.addEventListener('change', function() {
+            const selectedSort = this.value;
+            const currentDirection = urlParams.get('direction') || 'desc'; // デフォルトは降順
+
+            if (selectedSort) {
+                // 選択されたソート条件と現在の方向をURLに追加してリダイレクト
+                window.location.href = `{{ url()->current() }}?sort=${selectedSort}&direction=${currentDirection}`;
+            } else {
+                // 「並べ替え」が選ばれた場合、ソート条件を解除してリダイレクト
+                window.location.href = `{{ url()->current() }}`;
+            }
+        });
+    });
+</script>
 {{-- ★ ページネーションリンクの追加 ★ --}}
 <div class="pagination">
     {{-- Laravelのページネーションリンクを表示する（$todos変数がページネーターインスタンスである必要あり） --}}

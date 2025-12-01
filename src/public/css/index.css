@@ -308,3 +308,33 @@ svg.w-5.h-5 {
     height: 30px;
 }
 
+.sort-select-container {
+    display: flex;
+    align-items: center;
+    /* セル内で左寄せにしたい場合は justify-content: flex-start; */
+    justify-content: flex-end;
+    padding-right: 0 10px;
+    width: 100%;
+}
+
+/* プルダウンメニューの基本スタイル */
+.sort-menu-select {
+    padding: 8px;
+    border: 1px solid #ddd;
+    border-radius: 3px;
+    appearance: none;
+    /* デフォルトの矢印を非表示にする（任意） */
+    background-color: #f9f9f9;
+    cursor: pointer;
+    font-size: 14px;
+    min-width: 120px;
+}
+
+/* ソート状態を示すアイコン */
+.sort-status-icon {
+    margin-left: 5px;
+    font-size: 16px;
+    font-weight: bold;
+    color: #000
+    /* ソート中であることを示す色 */
+}
